@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,36 +10,62 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Simple animation for tab content */
         .tab-content {
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.5s ease-in-out;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .active-tab {
-            border-color: #4f46e5;
-            color: #4f46e5;
-            background-color: #eef2ff;
+            border-color: #f59e0b; /* Amber-400 */
+            color: #f59e0b;
+        }
+        /* Custom scrollbar for a more modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b; /* slate-800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; /* slate-600 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* slate-500 */
         }
     </style>
+    <script>
+        // Set theme based on user preference or default to dark
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
+    </script>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 transition-colors duration-300">
 
     <div class="container mx-auto p-4 sm:p-6 md:p-8">
         <!-- Header Section -->
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-900">AOH Dart League</h1>
-            <p class="text-lg text-gray-600 mt-2">2024-25 Season</p>
+        <header class="text-center mb-10">
+            <div class="flex justify-center items-center gap-4 mb-2">
+                 <svg class="w-10 h-10 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.539.166l-1.72.956a2.25 2.25 0 01-2.28 0l-1.72-.956a1.107 1.107 0 00-.539-.166l-.143-.048a2.25 2.25 0 01-1.161-.886l-.51-.766a1.125 1.125 0 01.216-1.49l1.068-.89a1.125 1.125 0 00.405-.864v-.568a1.125 1.125 0 01.708-1.044l3.453-1.218a1.125 1.125 0 011.416 0l3.453 1.218a1.125 1.125 0 01.708 1.044z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.354v10.792M15.75 8.48a.75.75 0 01.447.868l-1.012 4.25a.75.75 0 01-1.316.024l-.31-1.24a.75.75 0 00-1.124 0l-.31 1.24a.75.75 0 01-1.316-.024l-1.012-4.25a.75.75 0 01.447-.868M12 21a8.25 8.25 0 100-16.5 8.25 8.25 0 000 16.5z" />
+                </svg>
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">AOH Dart League</h1>
+            </div>
+            <p class="text-lg text-slate-600 dark:text-slate-400 mt-1">2024-25 Season</p>
         </header>
 
         <!-- Navigation Tabs -->
         <div class="mb-8">
-            <div class="flex justify-center border-b border-gray-300">
-                <button onclick="showTab('standings')" class="tab-button active-tab py-3 px-6 font-semibold text-gray-600 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 focus:outline-none">Standings</button>
-                <button onclick="showTab('schedule')" class="tab-button py-3 px-6 font-semibold text-gray-600 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 focus:outline-none">Schedule</button>
-                <button onclick="showTab('players')" class="tab-button py-3 px-6 font-semibold text-gray-600 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 focus:outline-none">Player Stats</button>
+            <div class="flex justify-center border-b border-slate-300 dark:border-slate-700">
+                <button onclick="showTab('standings')" class="tab-button active-tab py-3 px-6 font-semibold border-b-2 focus:outline-none transition-colors duration-300">Standings</button>
+                <button onclick="showTab('schedule')" class="tab-button py-3 px-6 font-semibold text-slate-500 dark:text-slate-400 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-400 focus:outline-none transition-colors duration-300">Schedule</button>
+                <button onclick="showTab('players')" class="tab-button py-3 px-6 font-semibold text-slate-500 dark:text-slate-400 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-400 focus:outline-none transition-colors duration-300">Player Stats</button>
             </div>
         </div>
 
@@ -47,22 +73,22 @@
         <main>
             <!-- Standings Tab -->
             <div id="standings" class="tab-content">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
                     <div class="p-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">League Standings</h2>
-                        <p class="text-gray-600 mb-6">Current standings for the second half of the season.</p>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">League Standings</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Current standings for the second half of the season.</p>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-full text-left">
-                            <thead class="bg-gray-50 border-b border-gray-200">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50">
                                 <tr>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Team</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Wins</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Total Points</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Rank</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Team</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Wins</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Total Points</th>
                                 </tr>
                             </thead>
-                            <tbody id="standings-table" class="bg-white divide-y divide-gray-200">
+                            <tbody id="standings-table" class="divide-y divide-slate-200 dark:divide-slate-700">
                                 <!-- Standings data will be injected here by JavaScript -->
                             </tbody>
                         </table>
@@ -72,20 +98,16 @@
 
             <!-- Schedule Tab -->
             <div id="schedule" class="tab-content hidden">
-                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">League Schedule</h2>
+                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">League Schedule</h2>
                     <div class="grid md:grid-cols-2 gap-8">
                         <div>
-                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 text-center">First Half</h3>
-                            <div id="schedule-first-half" class="space-y-6">
-                                <!-- First half schedule will be injected here -->
-                            </div>
+                            <h3 class="text-xl font-semibold text-amber-500 dark:text-amber-400 mb-4 text-center">First Half</h3>
+                            <div id="schedule-first-half" class="space-y-6"></div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 text-center">Second Half</h3>
-                            <div id="schedule-second-half" class="space-y-6">
-                                <!-- Second half schedule will be injected here -->
-                            </div>
+                            <h3 class="text-xl font-semibold text-amber-500 dark:text-amber-400 mb-4 text-center">Second Half</h3>
+                            <div id="schedule-second-half" class="space-y-6"></div>
                         </div>
                     </div>
                 </div>
@@ -93,21 +115,21 @@
 
             <!-- Players Tab -->
             <div id="players" class="tab-content hidden">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
                     <div class="p-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Player Leaderboard</h2>
-                        <p class="text-gray-600 mb-6">Individual player stats, sorted by average score.</p>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Player Leaderboard</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Individual player stats, sorted by average score.</p>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-full text-left">
-                            <thead class="bg-gray-50 border-b border-gray-200">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50">
                                 <tr>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Team</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Average</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Player</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Team</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Average</th>
                                 </tr>
                             </thead>
-                            <tbody id="players-table" class="bg-white divide-y divide-gray-200">
+                            <tbody id="players-table" class="divide-y divide-slate-200 dark:divide-slate-700">
                                 <!-- Player data will be injected here by JavaScript -->
                             </tbody>
                         </table>
@@ -118,13 +140,18 @@
 
         <!-- Footer -->
         <footer class="text-center mt-12">
-            <p class="text-gray-500">&copy; 2025 AOH Dart League. All rights reserved.</p>
+            <p class="text-slate-500 dark:text-slate-400">&copy; 2025 AOH Dart League. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
         // --- DATA SECTION ---
-        // You can update the league data here as the season progresses.
+        // For easier updates, you could host this data in a Google Sheet.
+        // 1. Create a sheet with your data.
+        // 2. Go to File > Share > Publish to web.
+        // 3. Publish the sheet as a CSV file and copy the URL.
+        // 4. Replace the data arrays below with a `fetch` call to that URL.
+        //    You would need a simple CSV parsing function.
 
         const standingsData = [
             { rank: 1, team: "Póg Mo Thóin", wins: 29, points: 2181 },
@@ -195,7 +222,7 @@
 
 
         // --- LOGIC SECTION ---
-        // This part of the script builds the HTML from the data above.
+        // This script builds the HTML from the data above.
 
         document.addEventListener('DOMContentLoaded', function() {
             populateStandings();
@@ -205,66 +232,50 @@
 
         function populateStandings() {
             const tableBody = document.getElementById('standings-table');
-            // Sort by rank before displaying
             standingsData.sort((a, b) => a.rank - b.rank);
-            standingsData.forEach(item => {
-                const row = `
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.rank}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600">${item.team}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">${item.wins}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">${item.points.toLocaleString()}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
+            tableBody.innerHTML = standingsData.map(item => `
+                <tr class="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors duration-200">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">${item.rank}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-amber-600 dark:text-amber-400">${item.team}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${item.wins}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${item.points.toLocaleString()}</td>
+                </tr>
+            `).join('');
         }
 
         function populatePlayers() {
             const tableBody = document.getElementById('players-table');
-            // Sort by average descending
             playersData.sort((a, b) => b.average - a.average);
-            playersData.forEach(player => {
-                const row = `
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${player.name}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${player.team}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right font-semibold">${player.average.toFixed(2)}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
+            tableBody.innerHTML = playersData.map(player => `
+                <tr class="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors duration-200">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">${player.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${player.team}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right font-semibold">${player.average.toFixed(2)}</td>
+                </tr>
+            `).join('');
         }
 
         function populateSchedule() {
             const firstHalfContainer = document.getElementById('schedule-first-half');
             const secondHalfContainer = document.getElementById('schedule-second-half');
-
-            scheduleData.firstHalf.forEach(week => {
-                const weekCard = createWeekCard(week.week, week.matches);
-                firstHalfContainer.innerHTML += weekCard;
-            });
-
-            scheduleData.secondHalf.forEach(week => {
-                const weekCard = createWeekCard(week.week, week.matches);
-                secondHalfContainer.innerHTML += weekCard;
-            });
+            firstHalfContainer.innerHTML = scheduleData.firstHalf.map(week => createWeekCard(week.week, week.matches)).join('');
+            secondHalfContainer.innerHTML = scheduleData.secondHalf.map(week => createWeekCard(week.week, week.matches)).join('');
         }
 
         function createWeekCard(weekNumber, matches) {
-            let matchesHtml = matches.map(match => {
+            const matchesHtml = matches.map(match => {
                 const teams = match.split(' vs ');
-                return `<div class="flex justify-between items-center text-sm">
-                            <span class="font-medium text-gray-700">${teams[0]}</span>
-                            <span class="text-xs font-bold text-gray-400">VS</span>
-                            <span class="font-medium text-gray-700">${teams[1]}</span>
+                return `<div class="flex justify-between items-center text-sm py-1">
+                            <span class="font-medium text-slate-700 dark:text-slate-300 text-left w-2/5">${teams[0]}</span>
+                            <span class="text-xs font-bold text-slate-400 dark:text-slate-500">VS</span>
+                            <span class="font-medium text-slate-700 dark:text-slate-300 text-right w-2/5">${teams[1]}</span>
                         </div>`;
             }).join('');
 
             return `
-                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
-                    <h4 class="font-bold text-md text-gray-700 mb-3">Week ${weekNumber}</h4>
-                    <div class="space-y-2">
+                <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-4 bg-slate-50 dark:bg-slate-800/50 hover:shadow-md hover:border-amber-400 dark:hover:border-amber-400 transition-all duration-300">
+                    <h4 class="font-bold text-md text-slate-800 dark:text-slate-200 mb-3">Week ${weekNumber}</h4>
+                    <div class="space-y-1 divide-y divide-slate-200 dark:divide-slate-700/50">
                         ${matchesHtml}
                     </div>
                 </div>
@@ -272,15 +283,19 @@
         }
 
         function showTab(tabName) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
             document.getElementById(tabName).classList.remove('hidden');
 
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(button => button.classList.remove('active-tab'));
-            document.querySelector(`button[onclick="showTab('${tabName}')"]`).classList.add('active-tab');
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active-tab');
+                button.classList.add('text-slate-500', 'dark:text-slate-400', 'border-transparent');
+                button.classList.remove('hover:border-amber-400', 'hover:text-amber-400');
+            });
+            
+            const activeButton = document.querySelector(`button[onclick="showTab('${tabName}')"]`);
+            activeButton.classList.add('active-tab');
+            activeButton.classList.remove('text-slate-500', 'dark:text-slate-400', 'border-transparent');
         }
-
     </script>
 </body>
 </html>
