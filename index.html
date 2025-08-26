@@ -1,301 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AOH Dart League 2024-25</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .tab-content {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .active-tab {
-            border-color: #f59e0b; /* Amber-400 */
-            color: #f59e0b;
-        }
-        /* Custom scrollbar for a more modern look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b; /* slate-800 */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #475569; /* slate-600 */
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b; /* slate-500 */
-        }
-    </style>
-    <script>
-        // Set theme based on user preference or default to dark
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hibernian Dart League</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-300 transition-colors duration-300">
+<body class="bg-green-900 text-white font-sans">
 
-    <div class="container mx-auto p-4 sm:p-6 md:p-8">
-        <!-- Header Section -->
-        <header class="text-center mb-10">
-            <div class="flex justify-center items-center gap-4 mb-2">
-                 <svg class="w-10 h-10 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.539.166l-1.72.956a2.25 2.25 0 01-2.28 0l-1.72-.956a1.107 1.107 0 00-.539-.166l-.143-.048a2.25 2.25 0 01-1.161-.886l-.51-.766a1.125 1.125 0 01.216-1.49l1.068-.89a1.125 1.125 0 00.405-.864v-.568a1.125 1.125 0 01.708-1.044l3.453-1.218a1.125 1.125 0 011.416 0l3.453 1.218a1.125 1.125 0 01.708 1.044z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.354v10.792M15.75 8.48a.75.75 0 01.447.868l-1.012 4.25a.75.75 0 01-1.316.024l-.31-1.24a.75.75 0 00-1.124 0l-.31 1.24a.75.75 0 01-1.316-.024l-1.012-4.25a.75.75 0 01.447-.868M12 21a8.25 8.25 0 100-16.5 8.25 8.25 0 000 16.5z" />
-                </svg>
-                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">AOH Dart League</h1>
-            </div>
-            <p class="text-lg text-slate-600 dark:text-slate-400 mt-1">2024-25 Season</p>
-        </header>
+  <!-- Header -->
+  <header class="bg-green-800 shadow-lg p-6 text-center">
+    <h1 class="text-3xl font-bold text-gold">Hibernian Dart League</h1>
+    <p class="text-lg text-gray-200">Standings • Schedule • Community</p>
+  </header>
 
-        <!-- Navigation Tabs -->
-        <div class="mb-8">
-            <div class="flex justify-center border-b border-slate-300 dark:border-slate-700">
-                <button onclick="showTab('standings')" class="tab-button active-tab py-3 px-6 font-semibold border-b-2 focus:outline-none transition-colors duration-300">Standings</button>
-                <button onclick="showTab('schedule')" class="tab-button py-3 px-6 font-semibold text-slate-500 dark:text-slate-400 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-400 focus:outline-none transition-colors duration-300">Schedule</button>
-                <button onclick="showTab('players')" class="tab-button py-3 px-6 font-semibold text-slate-500 dark:text-slate-400 border-b-2 border-transparent hover:border-amber-400 hover:text-amber-400 focus:outline-none transition-colors duration-300">Player Stats</button>
-            </div>
-        </div>
-
-        <!-- Main Content Area -->
-        <main>
-            <!-- Standings Tab -->
-            <div id="standings" class="tab-content">
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">League Standings</h2>
-                        <p class="text-slate-600 dark:text-slate-400">Current standings for the second half of the season.</p>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-full text-left">
-                            <thead class="bg-slate-50 dark:bg-slate-900/50">
-                                <tr>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Rank</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Team</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Wins</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Total Points</th>
-                                </tr>
-                            </thead>
-                            <tbody id="standings-table" class="divide-y divide-slate-200 dark:divide-slate-700">
-                                <!-- Standings data will be injected here by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Schedule Tab -->
-            <div id="schedule" class="tab-content hidden">
-                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">League Schedule</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="text-xl font-semibold text-amber-500 dark:text-amber-400 mb-4 text-center">First Half</h3>
-                            <div id="schedule-first-half" class="space-y-6"></div>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold text-amber-500 dark:text-amber-400 mb-4 text-center">Second Half</h3>
-                            <div id="schedule-second-half" class="space-y-6"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Players Tab -->
-            <div id="players" class="tab-content hidden">
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Player Leaderboard</h2>
-                        <p class="text-slate-600 dark:text-slate-400">Individual player stats, sorted by average score.</p>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-full text-left">
-                            <thead class="bg-slate-50 dark:bg-slate-900/50">
-                                <tr>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Player</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Team</th>
-                                    <th class="px-6 py-3 text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Average</th>
-                                </tr>
-                            </thead>
-                            <tbody id="players-table" class="divide-y divide-slate-200 dark:divide-slate-700">
-                                <!-- Player data will be injected here by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="text-center mt-12">
-            <p class="text-slate-500 dark:text-slate-400">&copy; 2025 AOH Dart League. All rights reserved.</p>
-        </footer>
+  <!-- Standings Section -->
+  <section class="p-6 max-w-5xl mx-auto">
+    <h2 class="text-2xl font-bold text-gold mb-4">League Standings</h2>
+    <div class="overflow-x-auto">
+      <table id="standingsTable" class="min-w-full bg-green-700 rounded-lg overflow-hidden shadow">
+        <thead>
+          <tr class="bg-green-600 text-white text-left">
+            <th class="p-3">Team</th>
+            <th class="p-3">Wins</th>
+            <th class="p-3">Losses</th>
+            <th class="p-3">Points</th>
+          </tr>
+        </thead>
+        <tbody id="standingsBody">
+          <tr><td colspan="4" class="p-3 text-center">Loading...</td></tr>
+        </tbody>
+      </table>
     </div>
+  </section>
 
-    <script>
-        // --- DATA SECTION ---
-        // For easier updates, you could host this data in a Google Sheet.
-        // 1. Create a sheet with your data.
-        // 2. Go to File > Share > Publish to web.
-        // 3. Publish the sheet as a CSV file and copy the URL.
-        // 4. Replace the data arrays below with a `fetch` call to that URL.
-        //    You would need a simple CSV parsing function.
+  <!-- Footer -->
+  <footer class="bg-green-800 p-4 text-center text-gray-300 mt-6">
+    &copy; 2025 Hibernian Dart League • Built with ❤️ and Darts
+  </footer>
 
-        const standingsData = [
-            { rank: 1, team: "Póg Mo Thóin", wins: 29, points: 2181 },
-            { rank: 2, team: "Krakow Kids", wins: 27, points: 1550 },
-            { rank: 3, team: "Dublin The 9's", wins: 23.5, points: 1903 },
-            { rank: 4, team: "Hooligans", wins: 20.5, points: 1630 },
-            { rank: 5, team: "Just the Tip", wins: 16.5, points: 1704 },
-            { rank: 6, team: "Volunteers", wins: 15.5, points: 1530 },
-            { rank: 7, team: "Fenian Bastards", wins: 15, points: 1696 },
-            { rank: 8, team: "Back for Moore", wins: 14.5, points: 1599 }
-        ];
-
-        const playersData = [
-            { name: "Alan H", team: "Póg Mo Thóin", average: 26 },
-            { name: "Joe R Jr.", team: "Dublin The 9's", average: 26 },
-            { name: "Brett F", team: "Póg Mo Thóin", average: 19 },
-            { name: "Cliff N", team: "Fenians", average: 18 },
-            { name: "JT M", team: "Dublin The 9's", average: 17 },
-            { name: "Keith S.", team: "Just The Tip", average: 16 },
-            { name: "Brendan R", team: "Póg Mo Thóin", average: 16 },
-            { name: "Kevin O", team: "Just The Tip", average: 15 },
-            { name: "Brian N", team: "Fenians", average: 15 },
-            { name: "Ed C", team: "Póg Mo Thóin", average: 15 },
-            { name: "Randy Jr.", team: "Back For Moore", average: 15 },
-            { name: "Ed K", team: "Volunteers", average: 15 },
-            { name: "Anthony R", team: "Just The Tip", average: 13 },
-            { name: "Joe R Sr.", team: "Dublin The 9's", average: 13 },
-            { name: "Tom O", team: "Volunteers", average: 13 },
-            { name: "Nick M", team: "Fenians", average: 12 },
-            { name: "Jay V", team: "Hooligans", average: 12 },
-            { name: "John Z", team: "Hooligans", average: 12 },
-            { name: "John S", team: "Dublin The 9's", average: 11 },
-            { name: "Tim Duffy", team: "Hooligans", average: 11 },
-            { name: "Josh R", team: "Back For Moore", average: 11 },
-            { name: "Tim M", team: "Back For Moore", average: 11 },
-            { name: "Bob B", team: "Volunteers", average: 11 },
-            { name: "Randy Sr.", team: "Back For Moore", average: 10 },
-            { name: "Adam M.", team: "Hooligans", average: 9 },
-            { name: "Ed M", team: "Fenians", average: 8 },
-            { name: "Brian R", team: "Krakow Kids", average: 8 },
-            { name: "Pat G", team: "Krakow Kids", average: 8 },
-            { name: "Brian F", team: "Krakow Kids", average: 8 },
-            { name: "Pete M", team: "Krakow Kids", average: 8 },
-            { name: "Al C", team: "Just The Tip", average: 7 },
-            { name: "Lou R", team: "Volunteers", average: 5 }
-        ];
-
-        const scheduleData = {
-            firstHalf: [
-                { week: 1, matches: ["Krakow Kids vs Just The Tip", "Fenians vs Póg Mo Thóin", "Hooligans vs Dublin The 9's", "Volunteers vs Back for Moore"] },
-                { week: 2, matches: ["Fenians vs Krakow Kids", "Hooligans vs Just The Tip", "Back for Moore vs Dublin The 9's", "Volunteers vs Póg Mo Thóin"] },
-                { week: 3, matches: ["Just The Tip vs Volunteers", "Póg Mo Thóin vs Back for Moore", "Dublin The 9's vs Fenians", "Krakow Kids vs Hooligans"] },
-                { week: 4, matches: ["Póg Mo Thóin vs Just The Tip", "Dublin The 9's vs Krakow Kids", "Back for Moore vs Fenians", "Hooligans vs Volunteers"] },
-                { week: 5, matches: ["Just The Tip vs Back for Moore", "Krakow Kids vs Volunteers", "Fenians vs Hooligans", "Póg Mo Thóin vs Dublin The 9's"] },
-                { week: 6, matches: ["Dublin The 9's vs Just The Tip", "Krakow Kids vs Póg Mo Thóin", "Hooligans vs Back for Moore", "Volunteers vs Fenians"] },
-                { week: 7, matches: ["Just The Tip vs Fenians", "Póg Mo Thóin vs Hooligans", "Back for Moore vs Krakow Kids", "Volunteers vs Dublin The 9's"] },
-            ],
-            secondHalf: [
-                { week: 1, matches: ["Just The Tip vs Póg Mo Thóin", "Back for Moore vs Krakow Kids", "Hooligans vs Fenians", "Volunteers vs Dublin The 9's"] },
-                { week: 2, matches: ["Just The Tip vs Back for Moore", "Póg Mo Thóin vs Hooligans", "Volunteers vs Krakow Kids", "Dublin The 9's vs Fenians"] },
-                { week: 3, matches: ["Krakow Kids vs Hooligans", "Fenians vs Póg Mo Thóin", "Dublin The 9's vs Back for Moore", "Volunteers vs Just The Tip"] },
-                { week: 4, matches: ["Hooligans vs Volunteers", "Krakow Kids vs Dublin The 9's", "Fenians vs Back for Moore", "Póg Mo Thóin vs Just The Tip"] },
-                { week: 5, matches: ["Dublin The 9's vs Póg Mo Thóin", "Hooligans vs Krakow Kids", "Back for Moore vs Just The Tip", "Fenians vs Volunteers"] },
-                { week: 6, matches: ["Fenians vs Just The Tip", "Back for Moore vs Volunteers", "Póg Mo Thóin vs Krakow Kids", "Dublin The 9's vs Hooligans"] },
-                { week: 7, matches: ["Krakow Kids vs Fenians", "Just The Tip vs Dublin The 9's", "Póg Mo Thóin vs Volunteers", "Hooligans vs Back for Moore"] },
-            ]
-        };
-
-
-        // --- LOGIC SECTION ---
-        // This script builds the HTML from the data above.
-
-        document.addEventListener('DOMContentLoaded', function() {
-            populateStandings();
-            populatePlayers();
-            populateSchedule();
-        });
-
-        function populateStandings() {
-            const tableBody = document.getElementById('standings-table');
-            standingsData.sort((a, b) => a.rank - b.rank);
-            tableBody.innerHTML = standingsData.map(item => `
-                <tr class="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors duration-200">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">${item.rank}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-amber-600 dark:text-amber-400">${item.team}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${item.wins}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right">${item.points.toLocaleString()}</td>
-                </tr>
-            `).join('');
-        }
-
-        function populatePlayers() {
-            const tableBody = document.getElementById('players-table');
-            playersData.sort((a, b) => b.average - a.average);
-            tableBody.innerHTML = playersData.map(player => `
-                <tr class="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors duration-200">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">${player.name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">${player.team}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 text-right font-semibold">${player.average.toFixed(2)}</td>
-                </tr>
-            `).join('');
-        }
-
-        function populateSchedule() {
-            const firstHalfContainer = document.getElementById('schedule-first-half');
-            const secondHalfContainer = document.getElementById('schedule-second-half');
-            firstHalfContainer.innerHTML = scheduleData.firstHalf.map(week => createWeekCard(week.week, week.matches)).join('');
-            secondHalfContainer.innerHTML = scheduleData.secondHalf.map(week => createWeekCard(week.week, week.matches)).join('');
-        }
-
-        function createWeekCard(weekNumber, matches) {
-            const matchesHtml = matches.map(match => {
-                const teams = match.split(' vs ');
-                return `<div class="flex justify-between items-center text-sm py-1">
-                            <span class="font-medium text-slate-700 dark:text-slate-300 text-left w-2/5">${teams[0]}</span>
-                            <span class="text-xs font-bold text-slate-400 dark:text-slate-500">VS</span>
-                            <span class="font-medium text-slate-700 dark:text-slate-300 text-right w-2/5">${teams[1]}</span>
-                        </div>`;
-            }).join('');
-
-            return `
-                <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-4 bg-slate-50 dark:bg-slate-800/50 hover:shadow-md hover:border-amber-400 dark:hover:border-amber-400 transition-all duration-300">
-                    <h4 class="font-bold text-md text-slate-800 dark:text-slate-200 mb-3">Week ${weekNumber}</h4>
-                    <div class="space-y-1 divide-y divide-slate-200 dark:divide-slate-700/50">
-                        ${matchesHtml}
-                    </div>
-                </div>
-            `;
-        }
-
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-            document.getElementById(tabName).classList.remove('hidden');
-
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active-tab');
-                button.classList.add('text-slate-500', 'dark:text-slate-400', 'border-transparent');
-                button.classList.remove('hover:border-amber-400', 'hover:text-amber-400');
-            });
-            
-            const activeButton = document.querySelector(`button[onclick="showTab('${tabName}')"]`);
-            activeButton.classList.add('active-tab');
-            activeButton.classList.remove('text-slate-500', 'dark:text-slate-400', 'border-transparent');
-        }
-    </script>
+  <script src="app.js"></script>
 </body>
 </html>
