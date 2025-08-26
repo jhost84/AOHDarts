@@ -1,37 +1,286 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOH Dart League 2024-25</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Simple animation for tab content */
+        .tab-content {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .active-tab {
+            border-color: #4f46e5;
+            color: #4f46e5;
+            background-color: #eef2ff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
 
-You can use the [editor on GitHub](https://github.com/jhost84/AOHDarts/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <!-- Header Section -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">AOH Dart League</h1>
+            <p class="text-lg text-gray-600 mt-2">2024-25 Season</p>
+        </header>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+        <!-- Navigation Tabs -->
+        <div class="mb-8">
+            <div class="flex justify-center border-b border-gray-300">
+                <button onclick="showTab('standings')" class="tab-button active-tab py-3 px-6 font-semibold text-gray-600 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 focus:outline-none">Standings</button>
+                <button onclick="showTab('schedule')" class="tab-button py-3 px-6 font-semibold text-gray-600 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 focus:outline-none">Schedule</button>
+                <button onclick="showTab('players')" class="tab-button py-3 px-6 font-semibold text-gray-600 border-b-2 border-transparent hover:border-indigo-500 hover:text-indigo-500 focus:outline-none">Player Stats</button>
+            </div>
+        </div>
 
-### Markdown
+        <!-- Main Content Area -->
+        <main>
+            <!-- Standings Tab -->
+            <div id="standings" class="tab-content">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">League Standings</h2>
+                        <p class="text-gray-600 mb-6">Current standings for the second half of the season.</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-full text-left">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Team</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Wins</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Total Points</th>
+                                </tr>
+                            </thead>
+                            <tbody id="standings-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Standings data will be injected here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+            <!-- Schedule Tab -->
+            <div id="schedule" class="tab-content hidden">
+                 <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">League Schedule</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 text-center">First Half</h3>
+                            <div id="schedule-first-half" class="space-y-6">
+                                <!-- First half schedule will be injected here -->
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-indigo-700 mb-4 text-center">Second Half</h3>
+                            <div id="schedule-second-half" class="space-y-6">
+                                <!-- Second half schedule will be injected here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-```markdown
-Syntax highlighted code block
+            <!-- Players Tab -->
+            <div id="players" class="tab-content hidden">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Player Leaderboard</h2>
+                        <p class="text-gray-600 mb-6">Individual player stats, sorted by average score.</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-full text-left">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Player</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Team</th>
+                                    <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Average</th>
+                                </tr>
+                            </thead>
+                            <tbody id="players-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Player data will be injected here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
 
-# Header 1
-## Header 2
-### Header 3
+        <!-- Footer -->
+        <footer class="text-center mt-12">
+            <p class="text-gray-500">&copy; 2025 AOH Dart League. All rights reserved.</p>
+        </footer>
+    </div>
 
-- Bulleted
-- List
+    <script>
+        // --- DATA SECTION ---
+        // You can update the league data here as the season progresses.
 
-1. Numbered
-2. List
+        const standingsData = [
+            { rank: 1, team: "Póg Mo Thóin", wins: 29, points: 2181 },
+            { rank: 2, team: "Krakow Kids", wins: 27, points: 1550 },
+            { rank: 3, team: "Dublin The 9's", wins: 23.5, points: 1903 },
+            { rank: 4, team: "Hooligans", wins: 20.5, points: 1630 },
+            { rank: 5, team: "Just the Tip", wins: 16.5, points: 1704 },
+            { rank: 6, team: "Volunteers", wins: 15.5, points: 1530 },
+            { rank: 7, team: "Fenian Bastards", wins: 15, points: 1696 },
+            { rank: 8, team: "Back for Moore", wins: 14.5, points: 1599 }
+        ];
 
-**Bold** and _Italic_ and `Code` text
+        const playersData = [
+            { name: "Alan H", team: "Póg Mo Thóin", average: 26 },
+            { name: "Joe R Jr.", team: "Dublin The 9's", average: 26 },
+            { name: "Brett F", team: "Póg Mo Thóin", average: 19 },
+            { name: "Cliff N", team: "Fenians", average: 18 },
+            { name: "JT M", team: "Dublin The 9's", average: 17 },
+            { name: "Keith S.", team: "Just The Tip", average: 16 },
+            { name: "Brendan R", team: "Póg Mo Thóin", average: 16 },
+            { name: "Kevin O", team: "Just The Tip", average: 15 },
+            { name: "Brian N", team: "Fenians", average: 15 },
+            { name: "Ed C", team: "Póg Mo Thóin", average: 15 },
+            { name: "Randy Jr.", team: "Back For Moore", average: 15 },
+            { name: "Ed K", team: "Volunteers", average: 15 },
+            { name: "Anthony R", team: "Just The Tip", average: 13 },
+            { name: "Joe R Sr.", team: "Dublin The 9's", average: 13 },
+            { name: "Tom O", team: "Volunteers", average: 13 },
+            { name: "Nick M", team: "Fenians", average: 12 },
+            { name: "Jay V", team: "Hooligans", average: 12 },
+            { name: "John Z", team: "Hooligans", average: 12 },
+            { name: "John S", team: "Dublin The 9's", average: 11 },
+            { name: "Tim Duffy", team: "Hooligans", average: 11 },
+            { name: "Josh R", team: "Back For Moore", average: 11 },
+            { name: "Tim M", team: "Back For Moore", average: 11 },
+            { name: "Bob B", team: "Volunteers", average: 11 },
+            { name: "Randy Sr.", team: "Back For Moore", average: 10 },
+            { name: "Adam M.", team: "Hooligans", average: 9 },
+            { name: "Ed M", team: "Fenians", average: 8 },
+            { name: "Brian R", team: "Krakow Kids", average: 8 },
+            { name: "Pat G", team: "Krakow Kids", average: 8 },
+            { name: "Brian F", team: "Krakow Kids", average: 8 },
+            { name: "Pete M", team: "Krakow Kids", average: 8 },
+            { name: "Al C", team: "Just The Tip", average: 7 },
+            { name: "Lou R", team: "Volunteers", average: 5 }
+        ];
 
-[Link](url) and ![Image](src)
-```
+        const scheduleData = {
+            firstHalf: [
+                { week: 1, matches: ["Krakow Kids vs Just The Tip", "Fenians vs Póg Mo Thóin", "Hooligans vs Dublin The 9's", "Volunteers vs Back for Moore"] },
+                { week: 2, matches: ["Fenians vs Krakow Kids", "Hooligans vs Just The Tip", "Back for Moore vs Dublin The 9's", "Volunteers vs Póg Mo Thóin"] },
+                { week: 3, matches: ["Just The Tip vs Volunteers", "Póg Mo Thóin vs Back for Moore", "Dublin The 9's vs Fenians", "Krakow Kids vs Hooligans"] },
+                { week: 4, matches: ["Póg Mo Thóin vs Just The Tip", "Dublin The 9's vs Krakow Kids", "Back for Moore vs Fenians", "Hooligans vs Volunteers"] },
+                { week: 5, matches: ["Just The Tip vs Back for Moore", "Krakow Kids vs Volunteers", "Fenians vs Hooligans", "Póg Mo Thóin vs Dublin The 9's"] },
+                { week: 6, matches: ["Dublin The 9's vs Just The Tip", "Krakow Kids vs Póg Mo Thóin", "Hooligans vs Back for Moore", "Volunteers vs Fenians"] },
+                { week: 7, matches: ["Just The Tip vs Fenians", "Póg Mo Thóin vs Hooligans", "Back for Moore vs Krakow Kids", "Volunteers vs Dublin The 9's"] },
+            ],
+            secondHalf: [
+                { week: 1, matches: ["Just The Tip vs Póg Mo Thóin", "Back for Moore vs Krakow Kids", "Hooligans vs Fenians", "Volunteers vs Dublin The 9's"] },
+                { week: 2, matches: ["Just The Tip vs Back for Moore", "Póg Mo Thóin vs Hooligans", "Volunteers vs Krakow Kids", "Dublin The 9's vs Fenians"] },
+                { week: 3, matches: ["Krakow Kids vs Hooligans", "Fenians vs Póg Mo Thóin", "Dublin The 9's vs Back for Moore", "Volunteers vs Just The Tip"] },
+                { week: 4, matches: ["Hooligans vs Volunteers", "Krakow Kids vs Dublin The 9's", "Fenians vs Back for Moore", "Póg Mo Thóin vs Just The Tip"] },
+                { week: 5, matches: ["Dublin The 9's vs Póg Mo Thóin", "Hooligans vs Krakow Kids", "Back for Moore vs Just The Tip", "Fenians vs Volunteers"] },
+                { week: 6, matches: ["Fenians vs Just The Tip", "Back for Moore vs Volunteers", "Póg Mo Thóin vs Krakow Kids", "Dublin The 9's vs Hooligans"] },
+                { week: 7, matches: ["Krakow Kids vs Fenians", "Just The Tip vs Dublin The 9's", "Póg Mo Thóin vs Volunteers", "Hooligans vs Back for Moore"] },
+            ]
+        };
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+        // --- LOGIC SECTION ---
+        // This part of the script builds the HTML from the data above.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jhost84/AOHDarts/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+        document.addEventListener('DOMContentLoaded', function() {
+            populateStandings();
+            populatePlayers();
+            populateSchedule();
+        });
 
-### Support or Contact
+        function populateStandings() {
+            const tableBody = document.getElementById('standings-table');
+            // Sort by rank before displaying
+            standingsData.sort((a, b) => a.rank - b.rank);
+            standingsData.forEach(item => {
+                const row = `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.rank}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-indigo-600">${item.team}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">${item.wins}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">${item.points.toLocaleString()}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+        function populatePlayers() {
+            const tableBody = document.getElementById('players-table');
+            // Sort by average descending
+            playersData.sort((a, b) => b.average - a.average);
+            playersData.forEach(player => {
+                const row = `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${player.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${player.team}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right font-semibold">${player.average.toFixed(2)}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function populateSchedule() {
+            const firstHalfContainer = document.getElementById('schedule-first-half');
+            const secondHalfContainer = document.getElementById('schedule-second-half');
+
+            scheduleData.firstHalf.forEach(week => {
+                const weekCard = createWeekCard(week.week, week.matches);
+                firstHalfContainer.innerHTML += weekCard;
+            });
+
+            scheduleData.secondHalf.forEach(week => {
+                const weekCard = createWeekCard(week.week, week.matches);
+                secondHalfContainer.innerHTML += weekCard;
+            });
+        }
+
+        function createWeekCard(weekNumber, matches) {
+            let matchesHtml = matches.map(match => {
+                const teams = match.split(' vs ');
+                return `<div class="flex justify-between items-center text-sm">
+                            <span class="font-medium text-gray-700">${teams[0]}</span>
+                            <span class="text-xs font-bold text-gray-400">VS</span>
+                            <span class="font-medium text-gray-700">${teams[1]}</span>
+                        </div>`;
+            }).join('');
+
+            return `
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                    <h4 class="font-bold text-md text-gray-700 mb-3">Week ${weekNumber}</h4>
+                    <div class="space-y-2">
+                        ${matchesHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            document.getElementById(tabName).classList.remove('hidden');
+
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active-tab'));
+            document.querySelector(`button[onclick="showTab('${tabName}')"]`).classList.add('active-tab');
+        }
+
+    </script>
+</body>
+</html>
